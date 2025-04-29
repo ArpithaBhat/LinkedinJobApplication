@@ -9,6 +9,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException, ElementClickInterceptedException
 import logging
+from dotenv import load_dotenv
+load_dotenv()
+
+
+
 
 # Set up logging
 logging.basicConfig(
@@ -20,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 class LinkedInAutoApply:
-    def __init__(self, email, password, search_terms, location, num_pages=1):
+    def __init__(self, email, password,search_terms,location,num_pages):
         """
         Initialize the LinkedIn Auto Apply bot
 
@@ -281,8 +286,10 @@ class LinkedInAutoApply:
 
 
 def main():
+    load_dotenv()
     # Get LinkedIn credentials from environment variables (GitHub Actions secrets)
     email = os.environ.get("LINKEDIN_EMAIL")
+    print(email)
     password = os.environ.get("LINKEDIN_PASSWORD")
     search_terms = os.environ.get("JOB_SEARCH_TERMS", "Python Developer")
     location = os.environ.get("JOB_LOCATION", "Remote")
@@ -300,7 +307,7 @@ def main():
     logger.info(f"Pages to process: {num_pages}")
 
     # Initialize and run the bot
-    bot = LinkedInAutoApply(email, password, search_terms, location, num_pages)
+    bot = LinkedInAutoApply(email, password,search_terms,location,num_pages)
 
     try:
         bot.login()
